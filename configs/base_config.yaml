@@ -1,0 +1,43 @@
+# Base configuration for cross-domain gaze estimation
+
+data:
+  root: ./data/processed
+  splits: ./data/splits
+  source_dataset: ETH        # ETH-XGaze | Gaze360 | MPII
+  target_dataset: MPII       # MPII | EyeDiap | Gaze360
+  image_size: 224
+  num_workers: 8
+
+model:
+  backbone: resnet50         # resnet18 | resnet50 | vit_base
+  # Component switches
+  use_fsci: true             # Feature Separation + Causal Intervention
+  use_gfal: true             # Gaze-First Auxiliary Learning
+  use_agg: true              # Geodesic Projection Module
+
+train:
+  epochs: 50
+  batch_size: 64
+  lr: 1e-4
+  weight_decay: 1e-4
+  scheduler: cosine
+  warmup_epochs: 5
+
+loss:
+  gaze_weight: 1.0
+  causal_weight: 0.1         # FSCI adversarial loss weight
+  auxiliary_weight: 0.5      # GFAL auxiliary loss weight
+
+  domain_weight: 0.1         # domain alignment loss weight
+
+gpu:
+  device: cuda
+  multi_gpu: true
+  gpu_ids: [0, 1]
+
+logging:
+  log_dir: ./logs
+  checkpoint_dir: ./checkpoints
+  result_dir: ./results
+  save_freq: 5               # save checkpoint every N epochs
+  eval_freq: 1

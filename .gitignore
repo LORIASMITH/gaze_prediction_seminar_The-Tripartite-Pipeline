@@ -1,0 +1,24 @@
+# Virtual environments
+.venv_gaze/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Checkpoints (reproduce by running training script)
+checkpoints/
+
+# Dataset files (download from GazeHub)
+data/
+
+# TensorBoard logs
+logs/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

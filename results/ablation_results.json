@@ -1,0 +1,36 @@
+{
+  "config": {
+    "src_dataset": "MPII",
+    "src_root": "data/MPII",
+    "tgt_root": "data/MPII",
+    "src_subjects": "p00,p01,p02,p03",
+    "tgt_subjects": "p04",
+    "eth_root": null,
+    "mpii_root": null,
+    "n_source": 3000,
+    "n_target": 3000,
+    "epochs": 30,
+    "batch_size": 64,
+    "lr": 0.0001,
+    "weight_decay": 0.0001,
+    "lambda_gfal": 0.5,
+    "num_workers": 4,
+    "image_size": 224,
+    "seed": 42,
+    "synthetic": false,
+    "stages": "3",
+    "ckpt_dir": "checkpoints/ablation",
+    "result_dir": "results",
+    "log_dir": "logs/ablation",
+    "no_pretrain": false,
+    "device": "cuda",
+    "agg_n_neighbors": null,
+    "agg_iso_dim": 3
+  },
+  "results": {
+    "Baseline": 5.1841,
+    "+FSCI": 5.043,
+    "+FSCI+GFAL": 4.6318,
+    "+FSCI+GFAL+AGG": 4.8173
+  }
+}

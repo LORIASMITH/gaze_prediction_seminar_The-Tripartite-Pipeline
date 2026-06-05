@@ -1,0 +1,48 @@
+# Cross-Domain Gaze Ablation  ETH-XGaze → MPIIGaze
+# Run: python scripts/ablation_study.py --config configs/ablation_config.yaml
+
+data:
+  eth_root:  data/ETH      # GazeHub normalized format: Image/ + Label/
+  mpii_root: data/MPII
+  n_source: 3000           # randomly sampled from ETH training set (subjects 0-74)
+  n_target: 3000           # randomly sampled from all MPII subjects
+  image_size: 224
+  num_workers: 8
+  seed: 42
+
+train:
+  epochs: 30
+  batch_size: 64
+  lr: 1.0e-4
+  weight_decay: 1.0e-4
+  lambda_gfal: 0.5         # weight of GFAL frontalization loss
+  ez_momentum: 0.9         # EMA momentum for FSCI confounding-feature buffer
+
+model:
+  pretrained: true         # ImageNet init for ResNet-18 backbone
+  d_model: 512
+  dropout: 0.3
+
+agg:
+  iso_dim: 3               # ISOMap output dimension (sphere is in R^3)
+  n_neighbors: null        # auto: 40% of training set, capped at 300
+
+output:
+  ckpt_dir:   checkpoints/ablation
+  result_dir: results
+  log_dir:    logs/ablation
+
+# ── Dataset download instructions ────────────────────────────────────────────
+# ETH-XGaze (source domain):
+#   1. Register at https://ait.ethz.ch/xgaze
+#   2. Download and unzip xgaze_224.zip → data/ETH/
+#   3. Structure: data/ETH/Image/subject0001/...  data/ETH/Label/subject0001.label
+#
+# MPIIFaceGaze (target domain):
+#   1. Download from https://www.mpi-inf.mpg.de  (MPIIFaceGaze, face-based)
+#   2. Apply GazeHub normalization script:
+#      phi-ai.buaa.edu.cn/Gazehub/3D-dataset/ → MPIIFaceGaze → processing code
+#   3. Structure: data/MPII/Image/p00/...  data/MPII/Label/p00.label
+#
+# To test without real data:
+#   python scripts/ablation_study.py --synthetic --epochs 5
