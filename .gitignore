@@ -17,6 +17,10 @@ data/
 # TensorBoard logs
 logs/
 
+# Model weights
+*.pth
+*.pkl
+
 # OS / IDE
 .DS_Store
 Thumbs.db
