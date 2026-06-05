@@ -23,7 +23,7 @@ Progressive ablation integrating **FSCI**, **GFAL**, and **AGG** on normalized M
 pip install -r requirements.txt
 ```
 
-CUDA is recommended. Tested on Python 3.11, PyTorch 2.2, 2× RTX 3090.
+CUDA is recommended. Tested on Python 3.11, PyTorch 2.12.0, CUDA 12.x, 2× NVIDIA RTX 3090.
 
 ## Dataset
 
